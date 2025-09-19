@@ -17,8 +17,8 @@ jobs:
       # ロックに従って同期（再現性）。テストを回す場合のみ必要
       - name: Sync deps (locked) and test
         run: |
-          uv sync --locked
-          uv run pytest
+          uv sync --locked --dev
+          uv run -m pytest
 
       # デプロイ用パッケージを作る
       - name: Package
