@@ -1,0 +1,9 @@
+[project]
+name = "1-1-dev-env-reproducibility"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = "==3.10.7"
+dependencies = [
+    "requests==2.32.5",
+]
