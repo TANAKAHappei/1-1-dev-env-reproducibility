@@ -1,17 +1,28 @@
 name: OSV scan
+
 on:
   pull_request:
     branches: [ "main" ]
   push:
     branches: [ "main" ]
 
+permissions:
+  actions: read
+  contents: read
+  security-events: write   # 結果をSecurityタブに出すのに必要
+
 jobs:
-  osv:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - name: OSV-Scanner
-        uses: google/osv-scanner-action@v1
-        with:
-          scan-args: >-
-            --repo .
+  # PRで新規に増えた脆弱性のみを対象にし、見つかったら失敗
+  osv-pr:
+    if: ${{ github.event_name == 'pull_request' }}
+    uses: google/osv-scanner-action/.github/workflows/osv-scanner-reusable-pr.yml@v2.2.2
+
+  # push（全量）でスキャンしたい場合
+  osv-push:
+    if: ${{ github.event_name == 'push' }}
+    uses: google/osv-scanner-action/.github/workflows/osv-scanner-reusable.yml@v2.2.2
+    # 必要に応じて引数を渡せます:
+    # with:
+    #   scan-args: |-
+    #     --recursive
+    #     ./
