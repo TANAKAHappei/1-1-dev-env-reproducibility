@@ -27,8 +27,7 @@ jobs:
           if (Test-Path $zip) { Remove-Item $zip -Force }
           # 必要なファイルを列挙（例）
           Compress-Archive -Path @(
-            "src","app.py",
-            "pyproject.toml","uv.lock","README.md"
+            "src", "pyproject.toml","uv.lock","README.md","requirements.txt"
           ) -DestinationPath $zip
 
       - name: Upload artifact
